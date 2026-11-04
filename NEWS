@@ -1,3 +1,16 @@
+Version 1.6.1
+~~~~~~~~~~~~~
+Released: 2026-11-05
+
+Miscellaneous:
+ * Clear up UI strings and update translations
+ * Update Qt and other dependencies' version for Windows and macOS pre-built binaries
+ * Add packaging configuration file for MSIX packaging
+ * Add Ubuntu 26.04 CI build
+
+Contributors:
+ Tech-Tac, Heimen Stoffels (vistaus), Andrew Poženel - SDT (anderlli0053), Oğuz Ersen
+
 Version 1.6.0
 ~~~~~~~~~~~~~
 Released: 2026-08-22
