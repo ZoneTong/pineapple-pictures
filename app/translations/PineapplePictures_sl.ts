@@ -809,6 +809,16 @@
         <translation>Ogled naslednjega ali prejšnjega elementa</translation>
     </message>
     <message>
+        <location filename="../settingsdialog.cpp" line="95"/>
+        <source>By file name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="96"/>
+        <source>By file modification time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../settingsdialog.cpp" line="94"/>
         <source>Auto</source>
         <translation>Samodejna velikost</translation>
@@ -896,6 +906,11 @@
         <location filename="../settingsdialog.cpp" line="135"/>
         <source>Mouse wheel behavior</source>
         <translation>Obnašanje miškinega kolesca</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="147"/>
+        <source>Image sorting</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="136"/>

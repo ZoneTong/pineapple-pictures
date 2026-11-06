@@ -821,6 +821,16 @@
         <translation>次の項目または前の項目を表示</translation>
     </message>
     <message>
+        <location filename="../settingsdialog.cpp" line="95"/>
+        <source>By file name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="96"/>
+        <source>By file modification time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../settingsdialog.cpp" line="94"/>
         <source>Auto</source>
         <translation>オートサイズ</translation>
@@ -908,6 +918,11 @@
         <location filename="../settingsdialog.cpp" line="135"/>
         <source>Mouse wheel behavior</source>
         <translation>マウスホイールの動作</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="147"/>
+        <source>Image sorting</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="136"/>

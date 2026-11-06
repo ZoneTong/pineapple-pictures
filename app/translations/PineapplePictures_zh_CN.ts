@@ -825,6 +825,16 @@
         <translation>查看下一项或上一项</translation>
     </message>
     <message>
+        <location filename="../settingsdialog.cpp" line="95"/>
+        <source>By file name</source>
+        <translation>按文件名</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="96"/>
+        <source>By file modification time</source>
+        <translation>按文件修改时间</translation>
+    </message>
+    <message>
         <location filename="../settingsdialog.cpp" line="94"/>
         <source>Auto</source>
         <translation>自动大小</translation>
@@ -912,6 +922,11 @@
         <location filename="../settingsdialog.cpp" line="135"/>
         <source>Mouse wheel behavior</source>
         <translation>鼠标滚轮行为</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="147"/>
+        <source>Image sorting</source>
+        <translation>图片排序</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="136"/>

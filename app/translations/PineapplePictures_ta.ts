@@ -809,6 +809,16 @@
         <translation>அடுத்த அல்லது முந்தைய உருப்படியைக் காண்க</translation>
     </message>
     <message>
+        <location filename="../settingsdialog.cpp" line="95"/>
+        <source>By file name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="96"/>
+        <source>By file modification time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../settingsdialog.cpp" line="94"/>
         <source>Auto</source>
         <translation>வாகன அளவு</translation>
@@ -896,6 +906,11 @@
         <location filename="../settingsdialog.cpp" line="135"/>
         <source>Mouse wheel behavior</source>
         <translation>சுட்டி சக்கர நடத்தை</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="147"/>
+        <source>Image sorting</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="136"/>

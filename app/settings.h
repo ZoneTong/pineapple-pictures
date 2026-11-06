@@ -32,6 +32,12 @@ public:
     };
     Q_ENUM(WindowSizeBehavior)
 
+    enum ImageSortBehavior {
+        ByFileName,
+        ByFileModificationTime,
+    };
+    Q_ENUM(ImageSortBehavior)
+
     static Settings *instance();
 
     bool stayOnTop() const;
@@ -46,6 +52,7 @@ public:
     MouseWheelBehavior mouseWheelBehavior() const;
     WindowSizeBehavior initWindowSizeBehavior() const;
     Qt::HighDpiScaleFactorRoundingPolicy hiDpiScaleFactorBehavior() const;
+    ImageSortBehavior imageSortBehavior() const;
 
     void setStayOnTop(bool on);
     void setUseBuiltInCloseAnimation(bool on);
@@ -59,6 +66,7 @@ public:
     void setMouseWheelBehavior(MouseWheelBehavior mwb);
     void setInitWindowSizeBehavior(WindowSizeBehavior wsb);
     void setHiDpiScaleFactorBehavior(Qt::HighDpiScaleFactorRoundingPolicy hidpi);
+    void setImageSortBehavior(ImageSortBehavior isb);
 
     void applyUserShortcuts(QWidget * widget);
     bool setShortcutsForAction(QWidget * widget, const QString & objectName,
@@ -72,6 +80,7 @@ private:
     QSettings *m_qsettings;
 
 signals:
+    void imageSortBehaviorChanged();
 
 public slots:
 };

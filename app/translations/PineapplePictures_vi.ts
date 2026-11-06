@@ -810,6 +810,16 @@ Loc Huynh &lt;https://github.com/hthienloc&gt;</translation>
         <translation>Xem mục tiếp theo hoặc trước đó</translation>
     </message>
     <message>
+        <location filename="../settingsdialog.cpp" line="95"/>
+        <source>By file name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="96"/>
+        <source>By file modification time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../settingsdialog.cpp" line="94"/>
         <source>Auto</source>
         <translation>Kích thước tự động</translation>
@@ -897,6 +907,11 @@ Loc Huynh &lt;https://github.com/hthienloc&gt;</translation>
         <location filename="../settingsdialog.cpp" line="135"/>
         <source>Mouse wheel behavior</source>
         <translation>Hành vi của bánh xe chuột</translation>
+    </message>
+    <message>
+        <location filename="../settingsdialog.cpp" line="147"/>
+        <source>Image sorting</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="136"/>

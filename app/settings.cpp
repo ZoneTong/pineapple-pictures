@@ -121,6 +121,13 @@ Qt::HighDpiScaleFactorRoundingPolicy Settings::hiDpiScaleFactorBehavior() const
     return QEnumHelper::fromString<Qt::HighDpiScaleFactorRoundingPolicy>(result, Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 }
 
+Settings::ImageSortBehavior Settings::imageSortBehavior() const
+{
+    QString result = m_qsettings->value("image_sort_behavior", "ByFileName").toString();
+
+    return QEnumHelper::fromString<ImageSortBehavior>(result, ImageSortBehavior::ByFileName);
+}
+
 void Settings::setStayOnTop(bool on)
 {
     m_qsettings->setValue("stay_on_top", on);
@@ -191,6 +198,16 @@ void Settings::setHiDpiScaleFactorBehavior(Qt::HighDpiScaleFactorRoundingPolicy 
 {
     m_qsettings->setValue("hidpi_scale_factor_behavior", QEnumHelper::toString(hidpi));
     m_qsettings->sync();
+}
+
+void Settings::setImageSortBehavior(ImageSortBehavior isb)
+{
+    if (imageSortBehavior() == isb) return;
+
+    m_qsettings->setValue("image_sort_behavior", QEnumHelper::toString(isb));
+    m_qsettings->sync();
+
+    emit imageSortBehaviorChanged();
 }
 
 void Settings::applyUserShortcuts(QWidget *widget)

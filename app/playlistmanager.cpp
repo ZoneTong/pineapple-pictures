@@ -4,9 +4,13 @@
 
 #include "playlistmanager.h"
 
+#include "settings.h"
+
 #include <QCollator>
+#include <QDateTime>
 #include <QDir>
 #include <QFileInfo>
+#include <QHash>
 #include <QUrl>
 
 PlaylistModel::PlaylistModel(QObject *parent)
@@ -22,6 +26,7 @@ void PlaylistModel::setPlaylist(const QList<QUrl> &urls)
 {
     beginResetModel();
     m_playlist = urls;
+    m_isDirectoryPlaylist = false;
     endResetModel();
 }
 
@@ -54,7 +59,29 @@ QModelIndex PlaylistModel::loadPlaylist(const QUrl &url)
     QCollator collator;
     collator.setNumericMode(true);
 
-    std::sort(entryList.begin(), entryList.end(), collator);
+    if (Settings::instance()->imageSortBehavior() == Settings::ImageSortBehavior::ByFileModificationTime) {
+        // Sort by the file modification time, oldest first. Files sharing the
+        // same modification time are sorted by file name to keep the order stable.
+        QHash<QString, QDateTime> modificationTimes;
+        modificationTimes.reserve(entryList.count());
+        for (const QString & fileName : std::as_const(entryList)) {
+            modificationTimes.insert(fileName,
+                                      QFileInfo(dir.absoluteFilePath(fileName)).lastModified());
+        }
+
+        std::stable_sort(entryList.begin(), entryList.end(),
+                         [&collator, &modificationTimes](const QString & lhs, const QString & rhs) {
+            const QDateTime lhsTime = modificationTimes.value(lhs);
+            const QDateTime rhsTime = modificationTimes.value(rhs);
+            if (lhsTime != rhsTime) {
+                return lhsTime < rhsTime;
+            }
+            return collator(lhs, rhs);
+        });
+    } else {
+        // Sort by file name in natural order (e.g. "img2.jpg" comes before "img10.jpg").
+        std::sort(entryList.begin(), entryList.end(), collator);
+    }
 
     QList<QUrl> playlist;
 
@@ -75,8 +102,22 @@ QModelIndex PlaylistModel::loadPlaylist(const QUrl &url)
     m_currentDir = dir.path();
 
     setPlaylist(playlist);
+    m_isDirectoryPlaylist = true;
 
     return index(idx);
+}
+
+QModelIndex PlaylistModel::reloadPlaylist(const QUrl &url)
+{
+    if (!m_isDirectoryPlaylist) {
+        const int idx = indexOf(url);
+        return idx == -1 ? QModelIndex() : index(idx);
+    }
+
+    // Force a directory rescan so the playlist is sorted again using the
+    // current sorting behavior.
+    m_currentDir.clear();
+    return loadPlaylist(url);
 }
 
 QModelIndex PlaylistModel::appendToPlaylist(const QUrl &url)
@@ -155,6 +196,9 @@ PlaylistManager::PlaylistManager(QObject *parent)
     connect(&m_model, &PlaylistModel::rowsInserted, this, onRowCountChanged);
     connect(&m_model, &PlaylistModel::rowsRemoved, this, onRowCountChanged);
     connect(&m_model, &PlaylistModel::modelReset, this, onRowCountChanged);
+
+    connect(Settings::instance(), &Settings::imageSortBehaviorChanged,
+            this, &PlaylistManager::reloadPlaylist);
 }
 
 PlaylistManager::~PlaylistManager()
@@ -184,6 +228,14 @@ QModelIndex PlaylistManager::loadPlaylist(const QUrl &url)
     QModelIndex idx = m_model.loadPlaylist(url);
     setProperty("currentIndex", idx.row());
     return idx;
+}
+
+void PlaylistManager::reloadPlaylist()
+{
+    const QUrl currentUrl = urlByIndex(curIndex());
+    if (!currentUrl.isValid()) return;
+
+    setCurrentIndex(m_model.reloadPlaylist(currentUrl));
 }
 
 QModelIndex PlaylistManager::loadM3U8Playlist(const QUrl &url)

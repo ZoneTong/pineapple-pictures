@@ -32,6 +32,7 @@ private:
     QCheckBox * m_svgTiny12Only = nullptr;
     QComboBox * m_doubleClickBehavior = nullptr;
     QComboBox * m_mouseWheelBehavior = nullptr;
+    QComboBox * m_imageSortBehavior = nullptr;
     QComboBox * m_initWindowSizeBehavior = nullptr;
     QComboBox * m_hiDpiRoundingPolicyBehavior = nullptr;
 };

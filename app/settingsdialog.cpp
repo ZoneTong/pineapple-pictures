@@ -29,6 +29,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
     , m_svgTiny12Only(new QCheckBox)
     , m_doubleClickBehavior(new QComboBox)
     , m_mouseWheelBehavior(new QComboBox)
+    , m_imageSortBehavior(new QComboBox)
     , m_initWindowSizeBehavior(new QComboBox)
     , m_hiDpiRoundingPolicyBehavior(new QComboBox)
 {
@@ -90,6 +91,11 @@ SettingsDialog::SettingsDialog(QWidget *parent)
         { Settings::MouseWheelBehavior::Switch, tr("View next or previous item") }
     };
 
+    static QList< QPair<Settings::ImageSortBehavior, QString> > _is_options {
+        { Settings::ImageSortBehavior::ByFileName, tr("By file name") },
+        { Settings::ImageSortBehavior::ByFileModificationTime, tr("By file modification time") }
+    };
+
     static QList< QPair<Settings::WindowSizeBehavior, QString> > _iws_options {
         { Settings::WindowSizeBehavior::Auto, tr("Auto") },
         { Settings::WindowSizeBehavior::Maximized, tr("Maximized") },
@@ -113,6 +119,11 @@ SettingsDialog::SettingsDialog(QWidget *parent)
         mwbDropDown.append(mwOption.second);
     }
 
+    QStringList isbDropDown;
+    for (const QPair<Settings::ImageSortBehavior, QString> & isOption : _is_options) {
+        isbDropDown.append(isOption.second);
+    }
+
     QStringList iwsbDropDown;
     for (const QPair<Settings::WindowSizeBehavior, QString> & iwsOption : _iws_options) {
         iwsbDropDown.append(iwsOption.second);
@@ -133,6 +144,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
     settingsForm->addRow(tr("Limit SVG support to SVG Tiny 1.2"), m_svgTiny12Only);
     settingsForm->addRow(tr("Double-click behavior"), m_doubleClickBehavior);
     settingsForm->addRow(tr("Mouse wheel behavior"), m_mouseWheelBehavior);
+    settingsForm->addRow(tr("Image sorting"), m_imageSortBehavior);
     settingsForm->addRow(tr("Default window state"), m_initWindowSizeBehavior);
     settingsForm->addRow(tr("HiDPI scale factor rounding policy"), m_hiDpiRoundingPolicyBehavior);
 
@@ -150,6 +162,9 @@ SettingsDialog::SettingsDialog(QWidget *parent)
     m_mouseWheelBehavior->setModel(new QStringListModel(mwbDropDown));
     Settings::MouseWheelBehavior mwb = Settings::instance()->mouseWheelBehavior();
     m_mouseWheelBehavior->setCurrentIndex(static_cast<int>(mwb));
+    m_imageSortBehavior->setModel(new QStringListModel(isbDropDown));
+    Settings::ImageSortBehavior isb = Settings::instance()->imageSortBehavior();
+    m_imageSortBehavior->setCurrentIndex(static_cast<int>(isb));
     m_initWindowSizeBehavior->setModel(new QStringListModel(iwsbDropDown));
     Settings::WindowSizeBehavior iwsb = Settings::instance()->initWindowSizeBehavior();
     m_initWindowSizeBehavior->setCurrentIndex(static_cast<int>(iwsb));
@@ -208,6 +223,10 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 
     connect(m_mouseWheelBehavior, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [ = ](int index){
         Settings::instance()->setMouseWheelBehavior(_mw_options.at(index).first);
+    });
+
+    connect(m_imageSortBehavior, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [ = ](int index){
+        Settings::instance()->setImageSortBehavior(_is_options.at(index).first);
     });
 
     connect(m_initWindowSizeBehavior, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [ = ](int index){

@@ -23,6 +23,7 @@ public:
     void setPlaylist(const QList<QUrl> & urls);
     QModelIndex loadPlaylist(const QList<QUrl> & urls);
     QModelIndex loadPlaylist(const QUrl & url);
+    QModelIndex reloadPlaylist(const QUrl & url);
     QModelIndex appendToPlaylist(const QUrl & url);
     bool removeAt(int index);
     int indexOf(const QUrl & url) const;
@@ -43,6 +44,7 @@ private:
     QStringList m_autoLoadSuffixes = {};
     // internal
     QString m_currentDir;
+    bool m_isDirectoryPlaylist = false;
 };
 
 class PlaylistManager : public QObject
@@ -62,6 +64,7 @@ public:
     Q_INVOKABLE QModelIndex loadPlaylist(const QList<QUrl> & urls);
     Q_INVOKABLE QModelIndex loadPlaylist(const QUrl & url);
     Q_INVOKABLE QModelIndex loadM3U8Playlist(const QUrl & url);
+    void reloadPlaylist();
 
     int totalCount() const;
     QModelIndex previousIndex() const;
